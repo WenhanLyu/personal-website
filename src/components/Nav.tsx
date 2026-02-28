@@ -44,8 +44,8 @@ const Nav = () => {
     <Disclosure
       as="header"
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
-          ? 'bg-white/90 dark:bg-black/90 backdrop-blur-md border-b border-zinc-200 dark:border-zinc-800'
-          : 'bg-transparent'
+        ? 'bg-white/90 dark:bg-black/90 backdrop-blur-md border-b border-zinc-200 dark:border-zinc-800'
+        : 'bg-transparent'
         }`}
     >
       <div className="mx-auto max-w-3xl px-6 py-4 flex items-center justify-between">
@@ -64,8 +64,8 @@ const Nav = () => {
                 key={link.href}
                 href={link.href}
                 className={`text-sm transition-colors ${pathname === link.href
-                    ? 'text-zinc-900 dark:text-zinc-100 font-medium'
-                    : 'text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100'
+                  ? 'text-zinc-900 dark:text-zinc-100 font-medium'
+                  : 'text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100'
                   }`}
               >
                 {link.label}
@@ -129,8 +129,8 @@ const Nav = () => {
               as={Link}
               href={link.href}
               className={`text-sm transition-colors ${pathname === link.href
-                  ? 'text-zinc-900 dark:text-zinc-100 font-medium'
-                  : 'text-zinc-500 dark:text-zinc-400'
+                ? 'text-zinc-900 dark:text-zinc-100 font-medium'
+                : 'text-zinc-500 dark:text-zinc-400'
                 }`}
             >
               {link.label}
