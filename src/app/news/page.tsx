@@ -28,16 +28,7 @@ const News = () => {
               {formatDate(item.date)}
             </time>
             <p className="text-base text-zinc-700 dark:text-zinc-300 leading-relaxed">
-              {item.link ? (
-                <a
-                  href={item.link}
-                  className="hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors underline underline-offset-2 decoration-zinc-300 dark:decoration-zinc-600 hover:decoration-zinc-900 dark:hover:decoration-zinc-100"
-                >
-                  {item.content}
-                </a>
-              ) : (
-                item.content
-              )}
+              {item.content}
             </p>
           </FadeIn>
         ))}

@@ -4,10 +4,12 @@ import FadeIn from '@/components/FadeIn';
 import { newsItems } from '@/data/news';
 import { publications } from '@/data/publications';
 import { researchItems } from '@/data/research';
+import { socialLinks } from '@/data/socialLinks';
+import { sharedBioSummary } from '@/data/bio';
 
 // Set to a path inside /public to display a real profile photo, e.g. '/photo.jpg'.
 // Leave empty to show the silhouette placeholder.
-const PROFILE_PHOTO = '';
+const PROFILE_PHOTO = '/me.png';
 
 const formatDate = (dateStr: string) => {
   const [year, month] = dateStr.split('-');
@@ -31,7 +33,9 @@ const IconLinkedIn = () => (
 
 const IconScholar = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5" aria-hidden>
-    <path d="M12 3 1 9.5l4.09 2.386V17.5c0 .828.384 1.563.983 2.04L12 22l5.927-2.46A2.5 2.5 0 0 0 19 17.5v-5.614L23 9.5 12 3zm5 9.583V17.5a.5.5 0 0 1-.307.459L12 20.18l-4.693-2.221A.5.5 0 0 1 7 17.5v-4.917l5 2.917 5-2.917zM12 13.382 4.236 9.5 12 5.618 19.764 9.5 12 13.382z" />
+    <path d="M12 3 2 8l10 5 8-4v5h2V8L12 3z" />
+    <path d="M6 11.2V15c0 2.2 3.1 4 6 4s6-1.8 6-4v-3.8l-6 3-6-3z" />
+    <circle cx="21" cy="16.5" r="1.5" />
   </svg>
 );
 
@@ -48,8 +52,18 @@ const IconCV = () => (
   >
     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
     <polyline points="14 2 14 8 20 8" />
-    <line x1="12" y1="18" x2="12" y2="12" />
-    <polyline points="9 15 12 18 15 15" />
+    <text
+      x="12"
+      y="16"
+      textAnchor="middle"
+      fontSize="6"
+      fontWeight="600"
+      letterSpacing="0.4"
+      fill="currentColor"
+      stroke="none"
+    >
+      CV
+    </text>
   </svg>
 );
 
@@ -129,29 +143,32 @@ const ResearchCardInner = ({ title, description, image, hasLink }: ResearchCardI
 
 // ── Publication link badges ───────────────────────────────────────────────────
 
-const PubLinks = ({ doi, pdf }: { doi?: string; pdf?: string }) => {
-  if (!doi && !pdf) return null;
+const PubLinks = ({ pdf }: { pdf?: string }) => {
+  if (!pdf) return null;
   return (
-    <div className="flex gap-3 mt-2">
-      {pdf && (
-        <a
-          href={pdf}
-          className="text-xs text-zinc-400 dark:text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors border-b border-zinc-300 dark:border-zinc-600 hover:border-zinc-900 dark:hover:border-zinc-100 pb-px"
-        >
+    <a
+      href={pdf}
+      title="Open PDF"
+      aria-label="Open PDF"
+      className="inline-flex items-center text-zinc-400 dark:text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
+    >
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="w-4 h-4"
+        aria-hidden
+      >
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+        <polyline points="14 2 14 8 20 8" />
+        <text x="12" y="16" textAnchor="middle" fontSize="5" fontWeight="600" fill="currentColor" stroke="none">
           PDF
-        </a>
-      )}
-      {doi && (
-        <a
-          href={doi}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-xs text-zinc-400 dark:text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors border-b border-zinc-300 dark:border-zinc-600 hover:border-zinc-900 dark:hover:border-zinc-100 pb-px"
-        >
-          DOI
-        </a>
-      )}
-    </div>
+        </text>
+      </svg>
+    </a>
   );
 };
 
@@ -160,50 +177,71 @@ const PubLinks = ({ doi, pdf }: { doi?: string; pdf?: string }) => {
 const Home = () => {
   const latestNews = newsItems.slice(0, 3);
   const featuredPubs = publications.filter((p) => p.featured);
+  const socialIcons = {
+    linkedin: <IconLinkedIn />,
+    scholar: <IconScholar />,
+    cv: <IconCV />,
+    github: <IconGitHub />,
+  } as const;
 
   return (
     <div className="mx-auto max-w-3xl px-6">
       {/* ── Hero ── */}
-      <section className="min-h-[80vh] flex flex-col justify-center pt-24 pb-10">
-        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-10">
+      <section className="flex flex-col justify-center pt-24 pb-10">
+        <div className="flex flex-col-reverse sm:flex-row sm:items-start sm:justify-between gap-4">
           {/* Text column */}
           <div className="flex-1 min-w-0">
-            <p
-              className="hero-animate text-sm font-medium tracking-widest uppercase text-zinc-400 dark:text-zinc-500 mb-5"
-              style={{ animationDelay: '0ms' }}
-            >
-              PhD Student · Computer Science
-            </p>
             <h1
-              className="hero-animate text-5xl sm:text-6xl font-light tracking-tight text-zinc-900 dark:text-zinc-100 leading-none mb-5"
+              className="hero-animate text-5xl sm:text-6xl font-light tracking-tight text-zinc-900 dark:text-zinc-100 leading-none mb-5 text-center sm:text-left"
               style={{ animationDelay: '120ms' }}
             >
               Wenhan Lyu
             </h1>
+            <div
+              className="hero-animate mb-7 text-zinc-600 dark:text-zinc-300"
+              style={{ animationDelay: '180ms' }}
+            >
+              <div className='flex flex-col items-center sm:items-start'>
+                <div className="inline-grid grid-cols-3 gap-x-3 text-center text-xs tracking-wide w-24">
+                  <span>lǚ</span>
+                  <span>wén</span>
+                  <span>hàn</span>
+                </div>
+                <div className="inline-grid grid-cols-3 gap-x-3 text-center text-xs mt-0.5 w-24">
+                  <span>吕</span>
+                  <span>文</span>
+                  <span>瀚</span>
+                </div>
+                <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-1 sm:gap-3 mt-0.5 text-center sm:text-left">
+                  <div className="inline-grid grid-cols-3 gap-x-3 text-xs shrink-0">
+                    <span>Lyu,</span>
+                    <span>Wen</span>
+                    <span>Han</span>
+                  </div>
+                  <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
+                    <i>Lyu</i> is pronounced like <i>Lu</i> in French.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <p className="hero-animate text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed mb-4 text-center sm:text-start" style={{ animationDelay: '240ms' }}>
+              wlyu [AT] wm [DOT] edu
+            </p>
+
             <p
               className="hero-animate text-base text-zinc-500 dark:text-zinc-400 leading-relaxed mb-8"
               style={{ animationDelay: '240ms' }}
             >
-              I design and study intelligent interfaces at the intersection of HCI and AI. My
-              research explores how adaptive systems can better support human decision-making and
-              creativity.
+              {sharedBioSummary}
             </p>
 
             {/* Social icon links */}
             <div
-              className="hero-animate flex items-center gap-4"
+              className="hero-animate flex items-center justify-center sm:justify-start gap-4"
               style={{ animationDelay: '360ms' }}
             >
-              {[
-                { href: 'https://github.com/', label: 'GitHub', icon: <IconGitHub /> },
-                { href: 'https://linkedin.com/', label: 'LinkedIn', icon: <IconLinkedIn /> },
-                {
-                  href: 'https://scholar.google.com/',
-                  label: 'Google Scholar',
-                  icon: <IconScholar />,
-                },
-                { href: '/cv.pdf', label: 'Download CV', icon: <IconCV /> },
-              ].map((link) => (
+              {socialLinks.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
@@ -213,7 +251,7 @@ const Home = () => {
                   className="text-zinc-400 dark:text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
                 >
                   <span className="sr-only">{link.label}</span>
-                  {link.icon}
+                  {socialIcons[link.id]}
                 </a>
               ))}
             </div>
@@ -221,19 +259,19 @@ const Home = () => {
 
           {/* Profile photo */}
           <div
-            className="hero-animate self-start"
+            className="hero-animate self-center sm:self-start"
             style={{ animationDelay: '200ms' }}
           >
             <ProfilePhoto src={PROFILE_PHOTO || undefined} />
           </div>
-        </div>
-      </section>
+        </div >
+      </section >
 
       {/* ── Research Interests ── */}
-      <FadeIn>
-        <section className="py-16 border-t border-zinc-200 dark:border-zinc-800">
-          <h2 className="text-xs font-medium tracking-widest uppercase text-zinc-400 dark:text-zinc-500 mb-6">
-            Research
+      < FadeIn >
+        <section className="py-8 border-t border-zinc-200 dark:border-zinc-800">
+          <h2 className="text-xs font-medium tracking-widest uppercase text-zinc-400 dark:text-zinc-500 mb-4">
+            Research Interests
           </h2>
           <div className="space-y-1">
             {researchItems.map((item, i) => (
@@ -261,11 +299,11 @@ const Home = () => {
             ))}
           </div>
         </section>
-      </FadeIn>
+      </FadeIn >
 
       {/* ── Latest News ── */}
-      <FadeIn>
-        <section className="py-16 border-t border-zinc-200 dark:border-zinc-800">
+      < FadeIn >
+        <section className="py-8 border-t border-zinc-200 dark:border-zinc-800">
           <div className="flex items-baseline justify-between mb-10">
             <h2 className="text-xs font-medium tracking-widest uppercase text-zinc-400 dark:text-zinc-500">
               Latest News
@@ -284,26 +322,17 @@ const Home = () => {
                   {formatDate(item.date)}
                 </time>
                 <p className="text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed">
-                  {item.link ? (
-                    <a
-                      href={item.link}
-                      className="hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors underline underline-offset-2 decoration-zinc-300 dark:decoration-zinc-600"
-                    >
-                      {item.content}
-                    </a>
-                  ) : (
-                    item.content
-                  )}
+                  {item.content}
                 </p>
               </FadeIn>
             ))}
           </ul>
         </section>
-      </FadeIn>
+      </FadeIn >
 
       {/* ── Selected Publications ── */}
-      <FadeIn>
-        <section className="py-16 border-t border-zinc-200 dark:border-zinc-800">
+      < FadeIn >
+        <section className="py-8 border-t border-zinc-200 dark:border-zinc-800">
           <div className="flex items-baseline justify-between mb-10">
             <h2 className="text-xs font-medium tracking-widest uppercase text-zinc-400 dark:text-zinc-500">
               Selected Publications
@@ -323,20 +352,44 @@ const Home = () => {
                 </span>
                 <div>
                   <p className="text-sm font-medium text-zinc-800 dark:text-zinc-200 leading-snug mb-1">
-                    {pub.title}
+                    {pub.doi ? (
+                      <a
+                        href={pub.doi}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors underline underline-offset-2 decoration-zinc-300 dark:decoration-zinc-600"
+                      >
+                        {pub.title}
+                      </a>
+                    ) : (
+                      pub.title
+                    )}
                   </p>
-                  <p className="text-sm text-zinc-500 dark:text-zinc-400">
-                    {pub.authors.join(', ')}
+                  <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-1">
+                    {pub.authors.map((author, idx) => (
+                      <span key={author}>
+                        {author.includes('Wenhan Lyu') ? (
+                          <strong className="font-medium text-zinc-700 dark:text-zinc-300">
+                            {author}
+                          </strong>
+                        ) : (
+                          author
+                        )}
+                        {idx < pub.authors.length - 1 ? ', ' : ''}
+                      </span>
+                    ))}
                   </p>
-                  <p className="text-sm text-zinc-400 dark:text-zinc-500 mt-0.5">{pub.venue}</p>
-                  <PubLinks doi={pub.doi} pdf={pub.pdf} />
+                  <div className="flex items-center gap-4 mt-1">
+                    <p className="text-sm text-zinc-400 dark:text-zinc-500">{pub.venue}</p>
+                    <PubLinks pdf={pub.pdf} />
+                  </div>
                 </div>
               </FadeIn>
             ))}
           </ul>
         </section>
-      </FadeIn>
-    </div>
+      </FadeIn >
+    </div >
   );
 };
 

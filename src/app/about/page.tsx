@@ -1,8 +1,32 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import FadeIn from '@/components/FadeIn';
+import { aboutBioParagraphs } from '@/data/bio';
 
 export const metadata: Metadata = {
   title: 'About — Wenhan Lyu',
+};
+
+type MiscGraphic = {
+  id: string;
+  title: string;
+  description?: string;
+  image?: string; // path in /public, e.g. '/misc/figure-1.jpg'
+  alt?: string;
+};
+
+const miscSectionData: { paragraphs: string[]; graphics: MiscGraphic[] } = {
+  paragraphs: [
+    'I love penguins 🐧.',
+  ],
+  graphics: [
+    {
+      id: 'img-1',
+      title: 'License Plate',
+      image: '/plate.png',
+      description: 'My previous license plate.',
+    },
+  ],
 };
 
 const About = () => {
@@ -16,38 +40,20 @@ const About = () => {
 
       {/* Bio */}
       <FadeIn delay={100}>
-        <section className="mb-16">
-          <p className="text-base text-zinc-700 dark:text-zinc-300 leading-relaxed mb-4">
-            I am a PhD student in Computer Science at [University Name], advised by{' '}
-            <a href="#" className="underline underline-offset-2 decoration-zinc-300 dark:decoration-zinc-600 hover:decoration-zinc-900 dark:hover:decoration-zinc-100 transition-colors">
-              [Advisor Name]
-            </a>
-            . My research sits at the intersection of{' '}
-            <strong className="font-medium text-zinc-900 dark:text-zinc-100">
-              Human-Computer Interaction
-            </strong>
-            ,{' '}
-            <strong className="font-medium text-zinc-900 dark:text-zinc-100">UI/UX design</strong>,
-            and{' '}
-            <strong className="font-medium text-zinc-900 dark:text-zinc-100">
-              artificial intelligence
-            </strong>
-            .
-          </p>
-          <p className="text-base text-zinc-700 dark:text-zinc-300 leading-relaxed mb-4">
-            I design and evaluate intelligent interfaces that adapt to users&apos; needs, with a
-            focus on high-stakes and accessibility-sensitive domains. I draw on both quantitative
-            and qualitative methods to understand how people interact with AI-powered systems.
-          </p>
-          <p className="text-base text-zinc-700 dark:text-zinc-300 leading-relaxed">
-            Before my PhD, I received a B.S. in [Field] from [Undergraduate University]. Outside
-            of research, I enjoy typography, generative art, and long-distance running.
-          </p>
+        <section className="mb-8">
+          {aboutBioParagraphs.map((paragraph, index) => (
+            <p
+              key={index}
+              className={`text-base text-zinc-700 dark:text-zinc-300 leading-relaxed${index < aboutBioParagraphs.length - 1 ? ' mb-4' : ''}`}
+            >
+              {paragraph}
+            </p>
+          ))}
         </section>
       </FadeIn>
 
       {/* Research Interests */}
-      <FadeIn delay={160}>
+      {/* <FadeIn delay={160}>
         <section className="mb-16 border-t border-zinc-200 dark:border-zinc-800 pt-12">
           <h2 className="text-xs font-medium tracking-widest uppercase text-zinc-400 dark:text-zinc-500 mb-8">
             Research Interests
@@ -67,27 +73,31 @@ const About = () => {
             ))}
           </ul>
         </section>
-      </FadeIn>
+      </FadeIn> */}
 
       {/* Education */}
       <FadeIn delay={220}>
-        <section className="mb-16 border-t border-zinc-200 dark:border-zinc-800 pt-12">
+        <section className="mb-8 border-t border-zinc-200 dark:border-zinc-800 pt-8">
           <h2 className="text-xs font-medium tracking-widest uppercase text-zinc-400 dark:text-zinc-500 mb-8">
             Education
           </h2>
-          <ul className="space-y-8">
+          <ul className="space-y-4">
             {[
               {
                 degree: 'PhD in Computer Science',
-                school: '[University Name]',
-                period: '2023 — Present',
-                note: 'Advised by [Advisor Name]',
+                school: 'William & Mary',
+                period: '2024 - Present',
+                note: 'Advised by Prof. Janice Zhang',
               },
               {
-                degree: 'B.S. in [Field]',
-                school: '[Undergraduate University]',
-                period: '2019 — 2023',
-                note: 'Graduated with Honors',
+                degree: 'M.S. in Computer Science',
+                school: 'New York University',
+                period: '2021 - 2023',
+              },
+              {
+                degree: 'B.Eng. in Computer Science and Technology',
+                school: 'Nankai University',
+                period: '2016 - 2020',
               },
             ].map((edu) => (
               <li key={edu.degree} className="flex gap-6">
@@ -107,28 +117,108 @@ const About = () => {
         </section>
       </FadeIn>
 
-      {/* Links */}
-      <FadeIn delay={280}>
-        <section className="border-t border-zinc-200 dark:border-zinc-800 pt-12">
+      {/* Teaching Experience */}
+      <FadeIn delay={220}>
+        <section className="mb-8 border-t border-zinc-200 dark:border-zinc-800 pt-8">
           <h2 className="text-xs font-medium tracking-widest uppercase text-zinc-400 dark:text-zinc-500 mb-8">
-            Links
+            Selected Teaching Experience
           </h2>
-          <div className="flex flex-wrap gap-4">
+          <ul className="space-y-2">
             {[
-              { label: 'GitHub ↗', href: 'https://github.com/' },
-              { label: 'LinkedIn ↗', href: 'https://linkedin.com/' },
-              { label: 'Google Scholar ↗', href: 'https://scholar.google.com/' },
-              { label: 'Download CV ↗', href: '/cv.pdf' },
-            ].map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                target={link.href.startsWith('http') ? '_blank' : undefined}
-                rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                className="text-sm text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors border-b border-zinc-300 dark:border-zinc-600 hover:border-zinc-900 dark:hover:border-zinc-100 pb-px"
+              {
+                semester: 'Spring 2026',
+                role: 'Teaching Assistant',
+                course: 'CSCI 456: Large Language Models',
+                note: ''
+              },
+              {
+                semester: 'Fall 2025',
+                role: 'Teaching Assistant',
+                course: 'CSCI 432 Web Programming',
+              },
+              {
+                semester: 'Fall 2024',
+                role: 'Teaching Assistant',
+                course: 'CSCI 432 Web Programming',
+                note: (
+                  <>
+                    Designed this new course with{' '}
+                    <a
+                      href="https://sarchlab.org/syifan"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline hover:text-zinc-700 dark:hover:text-zinc-300 transition-colors"
+                    >
+                      Prof. Yifan Sun
+                    </a>{' '}
+                    at W&amp;M!
+                  </>
+                ),
+              },
+              {
+                semester: 'Spring 2023',
+                role: 'Teaching Assistant',
+                course: 'CSCI-GA.2250 Operating Systems',
+                note: 'At New York University'
+              },
+            ].map((edu) => (
+              <li key={edu.semester} className="flex gap-6">
+                <span className="shrink-0 text-sm text-zinc-400 dark:text-zinc-500 w-32 pt-0.5">
+                  {edu.semester}
+                </span>
+                <div>
+                  <p className="text-sm text-zinc-500 dark:text-zinc-400">
+                    {edu.role} in <i>{edu.course}</i>
+                  </p>
+                  {edu.note ? (
+                    <p className="text-sm text-zinc-400 dark:text-zinc-500 italic">{edu.note}</p>
+                  ) : null}
+                </div>
+              </li>
+            ))}
+          </ul>
+        </section>
+      </FadeIn>
+
+      {/* Misc */}
+      <FadeIn delay={280}>
+        <section className="mb-8 border-t border-zinc-200 dark:border-zinc-800 pt-8">
+          <h2 className="text-xs font-medium tracking-widest uppercase text-zinc-400 dark:text-zinc-500 mb-8">
+            Misc
+          </h2>
+
+          <div className="space-y-4">
+            {miscSectionData.paragraphs.map((paragraph) => (
+              <p key={paragraph} className="text-base text-zinc-700 dark:text-zinc-300 leading-relaxed">
+                {paragraph}
+              </p>
+            ))}
+          </div>
+
+          <div className="mt-4 grid gap-4 sm:grid-cols-2">
+            {miscSectionData.graphics.map((graphic) => (
+              <figure
+                key={graphic.id}
+                className="border border-dashed border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900/40 p-4"
               >
-                {link.label}
-              </a>
+                <div className="relative h-40 flex items-center justify-center text-zinc-400 dark:text-zinc-500 text-sm">
+                  {graphic.image ? (
+                    <Image
+                      src={graphic.image}
+                      alt={graphic.alt ?? graphic.title}
+                      fill
+                      className="object-cover"
+                    />
+                  ) : (
+                    graphic.title
+                  )}
+                </div>
+                {graphic.description ? (
+                  <figcaption className="mt-3 text-sm text-zinc-500 dark:text-zinc-400">
+                    {graphic.description}
+                  </figcaption>
+                ) : null}
+              </figure>
             ))}
           </div>
         </section>

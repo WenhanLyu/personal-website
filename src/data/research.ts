@@ -9,25 +9,18 @@ export type ResearchItem = {
 export const researchItems: ResearchItem[] = [
   {
     id: '1',
-    title: 'Adaptive Intelligent Interfaces',
+    title: 'GenAI in Learning Environments',
     description:
-      'How can UIs learn from user behavior and context to proactively reduce cognitive load? I build and study systems that reshape themselves in response to user goals, expertise, and environment — from clinical decision-support dashboards to open-ended creative tools.',
+      'I study how students and instructors perceive and interact with GenAI in educational settings, including mental models, trust, and practices that align or conflict with pedagogical goals. This work informs the design of GenAI agents as genuine learning supports, whether as tutors or collaborative peers.',
     // image: '/research/adaptive-ui.jpg',
-    href: '#',
+    // href: '#',
   },
   {
     id: '2',
-    title: 'Human–AI Collaboration & Breakdowns',
+    title: 'LLMs for Programming Practices',
     description:
-      'LLM-powered tools introduce new failure modes: hallucinated information, opaque reasoning, and misaligned agency. My work identifies when and why human–AI collaboration breaks down, and designs interaction patterns that keep humans appropriately and comfortably in the loop.',
-    // image: '/research/hai-breakdowns.jpg',
-    href: '#',
-  },
-  {
-    id: '3',
-    title: 'Accessible & Inclusive Design',
-    description:
-      'I investigate how people with sensory and motor differences interact with data-rich interfaces, and co-design adaptive accessibility features that go beyond compliance checklists to achieve genuine, context-sensitive usability.',
-    // image: '/research/accessibility.jpg',
+      'I investigate whether coding agents can act as assistants, equal collaborators, or executors for programmers, and how its integration reshapes what it means to learn to code. This includes how workflows like vibe coding may shift attention toward higher-order skills such as UX design and problem decomposition.',
+    // image: '/research/genai-programming-education.jpg',
+    // href: '#',
   },
 ];

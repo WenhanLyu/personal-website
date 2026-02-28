@@ -31,22 +31,33 @@ const Publications = () => {
               <ul className="space-y-10">
                 {yearPubs.map((pub, i) => (
                   <FadeIn key={pub.title} as="li" delay={i * 80} className="flex gap-4">
-                    <div className="pt-1.5 shrink-0 w-4">
+                    {/* <div className="pt-1.5 shrink-0 w-4">
                       {pub.featured && (
                         <span
                           className="block w-1.5 h-1.5 rounded-full bg-zinc-400 dark:bg-zinc-500"
                           title="Featured"
                         />
                       )}
-                    </div>
+                    </div> */}
                     <div>
                       <p className="text-base font-medium text-zinc-800 dark:text-zinc-200 leading-snug mb-2">
-                        {pub.title}
+                        {pub.doi ? (
+                          <a
+                            href={pub.doi}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
+                          >
+                            {pub.title}
+                          </a>
+                        ) : (
+                          pub.title
+                        )}
                       </p>
                       <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-1">
                         {pub.authors.map((author, idx) => (
                           <span key={author}>
-                            {author === 'Wenhan Lyu' ? (
+                            {author.includes('Wenhan Lyu') ? (
                               <strong className="font-medium text-zinc-700 dark:text-zinc-300">
                                 {author}
                               </strong>
@@ -65,16 +76,6 @@ const Publications = () => {
                             className="text-xs text-zinc-400 dark:text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors border-b border-zinc-300 dark:border-zinc-600 hover:border-zinc-900 dark:hover:border-zinc-100 pb-px"
                           >
                             PDF ↗
-                          </a>
-                        )}
-                        {pub.doi && (
-                          <a
-                            href={pub.doi}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-xs text-zinc-400 dark:text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors border-b border-zinc-300 dark:border-zinc-600 hover:border-zinc-900 dark:hover:border-zinc-100 pb-px"
-                          >
-                            DOI ↗
                           </a>
                         )}
                       </div>
