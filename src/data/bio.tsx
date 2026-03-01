@@ -43,5 +43,5 @@ export const aboutBioParagraphs: ReactNode[] = [
     <BioLink href="https://www.nyu.edu/">New York University</BioLink> and{' '}
     <BioLink href="https://en.nankai.edu.cn/">Nankai University</BioLink>, respectively.
   </>,
-  <>Outside of research, I enjoy motorsports (Formula 1, GT3 &amp; IMSA) and reading.</>,
+  <>Outside of research, I enjoy motorsports (Formula 1 & endurance series) and reading.</>,
 ];
