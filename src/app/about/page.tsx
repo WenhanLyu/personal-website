@@ -128,7 +128,7 @@ const About = () => {
               {
                 semester: 'Spring 2026',
                 role: 'Teaching Assistant',
-                course: 'CSCI 456: Large Language Models',
+                course: 'CSCI 456 Large Language Models',
                 note: ''
               },
               {
