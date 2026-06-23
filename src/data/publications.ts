@@ -10,6 +10,15 @@ export type Publication = {
 
 export const publications: Publication[] = [
   {
+    title: 'TheBotCompany: Self-Organizing Multi-Agent Systems for Continuous Software Development',
+    authors: ['Wenhan Lyu', 'Yue Xiao', 'Yixuan Zhang', 'Yifan Sun'],
+    venue: 'ASE 2026',
+    year: 2026,
+    doi: 'https://arxiv.org/abs/2603.25928',
+    pdf: 'https://arxiv.org/pdf/2603.25928',
+    featured: true,
+  },
+  {
     title: 'Designing AI Peers for Collaborative Mathematical Problem Solving with Middle School Students: A Participatory Design Study',
     authors: ['Wenhan Lyu', 'Yimeng Wang', 'Murong Yue', 'Yifan Sun', 'Jennifer Suh', 'Meredith Kier', 'Ziyu Yao', 'Yixuan Zhang'],
     venue: 'CHI \'26',

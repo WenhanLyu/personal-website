@@ -20,6 +20,20 @@ const lnk = (href: string, text: ReactNode) => (
 
 export const newsItems: NewsItem[] = [
   {
+    id: '8',
+    date: '2026-06',
+    content: (
+      <>
+        Our paper{' '}
+        {lnk(
+          'https://arxiv.org/abs/2603.25928',
+          'TheBotCompany: Self-Organizing Multi-Agent Systems for Continuous Software Development',
+        )}{' '}
+        has been accepted by <b>ASE 2026</b>.
+      </>
+    ),
+  },
+  {
     id: '7',
     date: '2026-01',
     content: (
